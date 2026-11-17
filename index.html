@@ -1,0 +1,433 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#f5f4ef">
+    <title>Real or Scam? — Spot the message</title>
+    <style>
+      :root {
+        color-scheme: light;
+        --ink: #17231e;
+        --muted: #64716b;
+        --paper: #f5f4ef;
+        --card: #fffefa;
+        --green: #176b4a;
+        --green-light: #e5f3eb;
+        --red: #b7463b;
+        --red-light: #fae9e5;
+        --line: #e5e6df;
+        font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      }
+
+      * { box-sizing: border-box; }
+
+      body {
+        min-width: 320px;
+        min-height: 100vh;
+        margin: 0;
+        background:
+          radial-gradient(ellipse at 12% 10%, #e8eee1 0, transparent 34rem),
+          var(--paper);
+        color: var(--ink);
+      }
+
+      button { font: inherit; }
+
+      .page {
+        width: min(100% - 32px, 760px);
+        margin: 0 auto;
+        padding: 28px 0 48px;
+      }
+
+      .topbar, .brand, .score-wrap, .progress-row, .message-heading, .actions {
+        display: flex;
+        align-items: center;
+      }
+
+      .topbar, .progress-row, .message-heading {
+        justify-content: space-between;
+      }
+
+      .brand { gap: 10px; font-size: 15px; font-weight: 750; letter-spacing: -.02em; }
+      .brand-mark {
+        display: grid;
+        width: 34px;
+        height: 34px;
+        place-items: center;
+        border-radius: 11px;
+        background: var(--green);
+        color: white;
+        font-size: 18px;
+      }
+      .score-wrap { gap: 8px; color: var(--muted); font-size: 13px; font-weight: 650; }
+      .score {
+        min-width: 42px;
+        padding: 7px 10px;
+        border: 1px solid var(--line);
+        border-radius: 999px;
+        background: var(--card);
+        color: var(--ink);
+        text-align: center;
+      }
+
+      main { padding-top: 52px; }
+      .eyebrow {
+        margin: 0 0 11px;
+        color: var(--green);
+        font-size: 12px;
+        font-weight: 800;
+        letter-spacing: .12em;
+        text-transform: uppercase;
+      }
+      h1 {
+        margin: 0;
+        font-size: clamp(32px, 6vw, 48px);
+        letter-spacing: -.055em;
+        line-height: 1.05;
+      }
+      .intro {
+        max-width: 550px;
+        margin: 16px 0 28px;
+        color: var(--muted);
+        font-size: 16px;
+        line-height: 1.65;
+      }
+
+      .game-card, .welcome-card, .result-card {
+        border: 1px solid var(--line);
+        border-radius: 20px;
+        background: var(--card);
+        box-shadow: 0 16px 44px rgb(23 35 30 / 6%);
+      }
+      .welcome-card, .result-card { padding: clamp(24px, 6vw, 42px); }
+      .game-card { overflow: hidden; }
+      .progress-row {
+        gap: 16px;
+        padding: 20px 24px 16px;
+        color: var(--muted);
+        font-size: 13px;
+        font-weight: 650;
+      }
+      .progress-track {
+        height: 5px;
+        margin: 0 24px;
+        overflow: hidden;
+        border-radius: 5px;
+        background: #edf0e9;
+      }
+      .progress-fill {
+        width: 0;
+        height: 100%;
+        border-radius: inherit;
+        background: var(--green);
+        transition: width 180ms ease;
+      }
+      .message {
+        margin: 20px 24px 0;
+        padding: 22px;
+        border: 1px solid var(--line);
+        border-radius: 14px;
+        background: #fbfbf7;
+      }
+      .message-heading { gap: 12px; }
+      .channel {
+        display: inline-flex;
+        align-items: center;
+        gap: 7px;
+        color: var(--green);
+        font-size: 12px;
+        font-weight: 800;
+        letter-spacing: .08em;
+        text-transform: uppercase;
+      }
+      .channel-icon { font-size: 16px; }
+      .timestamp { color: #89918c; font-size: 12px; }
+      .sender { margin: 18px 0 5px; font-size: 14px; font-weight: 750; }
+      .detail { margin: 0; color: var(--muted); font-size: 12px; }
+      .message-copy {
+        margin: 22px 0 2px;
+        color: #29362f;
+        font-size: 15px;
+        line-height: 1.7;
+        overflow-wrap: anywhere;
+      }
+      .question {
+        margin: 22px 24px 14px;
+        font-size: 14px;
+        font-weight: 750;
+        text-align: center;
+      }
+      .actions {
+        justify-content: center;
+        gap: 12px;
+        padding: 0 24px 24px;
+      }
+      .answer-button, .primary-button, .next-button {
+        min-height: 48px;
+        border: 0;
+        border-radius: 12px;
+        cursor: pointer;
+        font-weight: 750;
+        transition: transform 120ms ease, filter 120ms ease;
+      }
+      .answer-button { flex: 1; max-width: 220px; }
+      .answer-button:hover, .primary-button:hover, .next-button:hover { filter: brightness(.96); transform: translateY(-1px); }
+      .answer-button:focus-visible, .primary-button:focus-visible, .next-button:focus-visible {
+        outline: 3px solid #e3b65c;
+        outline-offset: 3px;
+      }
+      .ok-button { background: var(--green-light); color: #15583e; }
+      .scam-button { background: var(--red-light); color: #a23830; }
+      .feedback {
+        margin: 0 24px 24px;
+        padding: 16px 18px;
+        border-radius: 12px;
+        line-height: 1.55;
+      }
+      .feedback.correct { background: var(--green-light); color: #15583e; }
+      .feedback.incorrect { background: var(--red-light); color: #8d3029; }
+      .feedback strong { display: block; margin-bottom: 4px; }
+      .feedback p { margin: 0; font-size: 14px; }
+      .next-wrap { display: flex; justify-content: flex-end; padding: 0 24px 24px; }
+      .next-button, .primary-button { padding: 0 22px; background: var(--green); color: white; }
+      .result-card { text-align: center; }
+      .result-icon { font-size: 42px; }
+      .result-card h2 { margin: 14px 0 9px; font-size: 28px; letter-spacing: -.04em; }
+      .result-card p { margin: 0 auto 24px; max-width: 440px; color: var(--muted); line-height: 1.65; }
+      .result-card .primary-button { min-width: 150px; }
+      .hint { margin: 18px 0 0; color: var(--muted); font-size: 12px; text-align: center; }
+      [hidden] { display: none !important; }
+
+      @media (max-width: 520px) {
+        .page { width: min(100% - 24px, 760px); padding-top: 18px; }
+        main { padding-top: 40px; }
+        .intro { font-size: 15px; }
+        .progress-row { padding: 18px 18px 14px; }
+        .progress-track { margin: 0 18px; }
+        .message { margin: 18px 14px 0; padding: 18px; }
+        .question { margin-inline: 14px; }
+        .actions { gap: 9px; padding-inline: 14px; }
+        .feedback { margin-inline: 14px; }
+        .next-wrap { padding-inline: 14px; }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="page">
+      <header class="topbar">
+        <div class="brand"><span class="brand-mark" aria-hidden="true">✓</span> Real or Scam?</div>
+        <div class="score-wrap">Score <span class="score" id="score" aria-live="polite">0</span></div>
+      </header>
+
+      <main>
+        <section id="welcome" class="welcome-card" aria-labelledby="title">
+          <p class="eyebrow">Trust your instincts</p>
+          <h1 id="title">Real or scam?</h1>
+          <p class="intro">Messages land in your inbox, texts, and DMs every day. Can you tell which ones are safe? Read each one and decide: OK or scam.</p>
+          <button class="primary-button" id="start-button" type="button">Start the game <span aria-hidden="true">→</span></button>
+          <p class="hint">10 messages · No time limit · Learn as you go</p>
+        </section>
+
+        <section id="game" class="game-card" aria-label="Message guessing game" hidden>
+          <div class="progress-row">
+            <span id="round-label">Message 1 of 10</span>
+            <span id="streak-label">Best streak: 0</span>
+          </div>
+          <div class="progress-track" role="progressbar" aria-label="Game progress" aria-valuemin="0" aria-valuemax="10" aria-valuenow="0">
+            <div class="progress-fill" id="progress-fill"></div>
+          </div>
+          <article class="message" aria-live="polite">
+            <div class="message-heading">
+              <span class="channel"><span class="channel-icon" id="channel-icon" aria-hidden="true"></span><span id="channel-name"></span></span>
+              <span class="timestamp" id="timestamp"></span>
+            </div>
+            <p class="sender" id="sender"></p>
+            <p class="detail" id="detail"></p>
+            <p class="message-copy" id="message-copy"></p>
+          </article>
+          <p class="question">What do you think?</p>
+          <div class="actions" id="answer-actions">
+            <button class="answer-button ok-button" type="button" data-answer="ok">✓ &nbsp; OK</button>
+            <button class="answer-button scam-button" type="button" data-answer="scam">⚠ &nbsp; Scam</button>
+          </div>
+          <div id="feedback" class="feedback" role="status" hidden></div>
+          <div class="next-wrap" id="next-wrap" hidden>
+            <button class="next-button" id="next-button" type="button">Next message <span aria-hidden="true">→</span></button>
+          </div>
+        </section>
+
+        <section id="results" class="result-card" aria-live="polite" hidden>
+          <div class="result-icon" id="result-icon" aria-hidden="true"></div>
+          <h2 id="result-title"></h2>
+          <p id="result-copy"></p>
+          <button class="primary-button" id="play-again-button" type="button">Play again</button>
+        </section>
+      </main>
+    </div>
+
+    <script>
+      const messages = [
+        {
+          channel: "Email", icon: "✉", time: "Today, 9:41 AM",
+          sender: "Your library", detail: "From: notices@northside-library.example",
+          copy: "Your book is due Friday. Renew it through the library app or bring it to any branch. Questions? Call the number on your library card.",
+          answer: "ok", reason: "It gives a routine reminder and directs you to a familiar app or a number you already have, rather than asking you to share sensitive information."
+        },
+        {
+          channel: "SMS", icon: "▣", time: "Today, 10:06 AM",
+          sender: "Parcel update", detail: "From: +1 (555) 010-2741",
+          copy: "Delivery failed: address incomplete. Pay a $1.25 redelivery fee now: parcel-track.example/fee. Reply STOP to avoid return.",
+          answer: "scam", reason: "Unexpected delivery texts that demand a small fee through a link are a common trick. Check tracking in the retailer's or carrier's official app instead."
+        },
+        {
+          channel: "DM", icon: "◉", time: "Yesterday",
+          sender: "Maya Chen", detail: "Instagram · friend you know",
+          copy: "Hey! I found the photos from the hike last weekend and put them in our shared album. The link is in the group chat we already use 🙂",
+          answer: "ok", reason: "This fits an existing conversation and points to a shared space you already use. Still, if anything feels off, confirm with your friend another way."
+        },
+        {
+          channel: "Email", icon: "✉", time: "Today, 8:12 AM",
+          sender: "Account Security", detail: "From: secure-alerts@account-check.example",
+          copy: "We detected suspicious activity. Your account will be permanently closed in 30 minutes. Confirm your password and one-time code here to keep access.",
+          answer: "scam", reason: "Urgency, a threat of account closure, and a request for your password or one-time code are major warning signs. Go directly to the service's official site."
+        },
+        {
+          channel: "SMS", icon: "▣", time: "Today, 11:23 AM",
+          sender: "Sam", detail: "From: +1 (555) 010-8830",
+          copy: "Running 10 min late—train's stopped at Central. Same coffee place as usual? I'll message when I'm two stops away.",
+          answer: "ok", reason: "This is an ordinary personal message with no unusual request or link. If you weren't expecting it, check with Sam through a number you know."
+        },
+        {
+          channel: "DM", icon: "◉", time: "Today, 12:15 PM",
+          sender: "CryptoQueen_Official", detail: "TikTok · new account",
+          copy: "You won! I picked YOUR username for my private giveaway 🎉 Send $20 in gift cards to verify your spot and I'll send back $2,000. Keep this secret!",
+          answer: "scam", reason: "You should never have to pay to receive a prize. Gift cards, guaranteed returns, a new account, and a request for secrecy all point to a scam."
+        },
+        {
+          channel: "Email", icon: "✉", time: "Yesterday, 4:32 PM",
+          sender: "Community Garden", detail: "From: team@maple-street-garden.example",
+          copy: "Saturday's volunteer morning starts at 9. Bring gloves if you have them; tools and tea will be provided. Reply to this email if you can make it.",
+          answer: "ok", reason: "It's a low-pressure invitation with a straightforward reply, and no demand for money, credentials, or personal details."
+        },
+        {
+          channel: "SMS", icon: "▣", time: "Today, 1:02 PM",
+          sender: "MOM", detail: "From: unknown number",
+          copy: "Hi, this is my new phone. I lost mine and can't call. Please buy two gift cards and text me the codes ASAP. Don't tell Dad—it's a surprise.",
+          answer: "scam", reason: "A sudden new number, urgent money request, gift cards, and secrecy are classic impersonation signs. Contact your family member using a number you already trust."
+        },
+        {
+          channel: "DM", icon: "◉", time: "Today, 2:47 PM",
+          sender: "Local Bookshop", detail: "Instagram · account you follow",
+          copy: "We're open until 6 today. This week's reading group pick is on the front table, and the event details are in our profile. Hope to see you there!",
+          answer: "ok", reason: "This is a simple announcement with no pressure or sensitive request. If you want details, visit the shop's profile directly."
+        },
+        {
+          channel: "Email", icon: "✉", time: "Today, 3:18 PM",
+          sender: "Payroll Team", detail: "From: payroll-review@workplace-docs.example",
+          copy: "Your direct deposit is on hold. Open the attached form and enter your employee login, bank password, and full card number today or miss this pay cycle.",
+          answer: "scam", reason: "A legitimate payroll team should not ask for your bank password or full card number by email. Contact payroll through your usual workplace channel."
+        }
+      ];
+
+      const welcome = document.querySelector("#welcome");
+      const game = document.querySelector("#game");
+      const results = document.querySelector("#results");
+      const scoreDisplay = document.querySelector("#score");
+      const answerActions = document.querySelector("#answer-actions");
+      const feedback = document.querySelector("#feedback");
+      const nextWrap = document.querySelector("#next-wrap");
+      const progressTrack = document.querySelector(".progress-track");
+      let round = 0;
+      let score = 0;
+      let streak = 0;
+      let bestStreak = 0;
+      let answered = false;
+
+      function showMessage() {
+        const message = messages[round];
+        answered = false;
+        document.querySelector("#round-label").textContent = `Message ${round + 1} of ${messages.length}`;
+        document.querySelector("#streak-label").textContent = `Best streak: ${bestStreak}`;
+        document.querySelector("#channel-icon").textContent = message.icon;
+        document.querySelector("#channel-name").textContent = message.channel;
+        document.querySelector("#timestamp").textContent = message.time;
+        document.querySelector("#sender").textContent = message.sender;
+        document.querySelector("#detail").textContent = message.detail;
+        document.querySelector("#message-copy").textContent = message.copy;
+        document.querySelector("#progress-fill").style.width = `${(round / messages.length) * 100}%`;
+        progressTrack.setAttribute("aria-valuenow", String(round));
+        answerActions.hidden = false;
+        feedback.hidden = true;
+        nextWrap.hidden = true;
+      }
+
+      function startGame() {
+        round = 0;
+        score = 0;
+        streak = 0;
+        bestStreak = 0;
+        scoreDisplay.textContent = "0";
+        welcome.hidden = true;
+        results.hidden = true;
+        game.hidden = false;
+        showMessage();
+      }
+
+      function chooseAnswer(answer) {
+        if (answered) return;
+        answered = true;
+        const message = messages[round];
+        const correct = answer === message.answer;
+        if (correct) {
+          score += 1;
+          streak += 1;
+          bestStreak = Math.max(bestStreak, streak);
+        } else {
+          streak = 0;
+        }
+        scoreDisplay.textContent = String(score);
+        document.querySelector("#streak-label").textContent = `Best streak: ${bestStreak}`;
+        answerActions.hidden = true;
+        feedback.hidden = false;
+        feedback.className = `feedback ${correct ? "correct" : "incorrect"}`;
+        feedback.replaceChildren();
+        const heading = document.createElement("strong");
+        heading.textContent = correct ? "That's right!" : `Not quite — this one is ${message.answer === "ok" ? "OK" : "a scam"}.`;
+        const explanation = document.createElement("p");
+        explanation.textContent = message.reason;
+        feedback.append(heading, explanation);
+        nextWrap.hidden = false;
+        document.querySelector("#next-button").textContent = round === messages.length - 1 ? "See your results →" : "Next message →";
+      }
+
+      function nextMessage() {
+        round += 1;
+        if (round < messages.length) {
+          showMessage();
+          return;
+        }
+        game.hidden = true;
+        results.hidden = false;
+        document.querySelector("#progress-fill").style.width = "100%";
+        progressTrack.setAttribute("aria-valuenow", String(messages.length));
+        const percent = Math.round((score / messages.length) * 100);
+        document.querySelector("#result-icon").textContent = score >= 8 ? "🏆" : score >= 5 ? "🌱" : "🧭";
+        document.querySelector("#result-title").textContent = score >= 8 ? "Sharp eyes!" : score >= 5 ? "Good instincts!" : "Keep practicing!";
+        document.querySelector("#result-copy").textContent = `You spotted ${score} of ${messages.length} messages correctly (${percent}%). When in doubt, don't click or reply—contact the person or organization through a channel you already trust.`;
+      }
+
+      document.querySelector("#start-button").addEventListener("click", startGame);
+      document.querySelector("#play-again-button").addEventListener("click", startGame);
+      document.querySelector("#next-button").addEventListener("click", nextMessage);
+      answerActions.addEventListener("click", (event) => {
+        const button = event.target.closest("[data-answer]");
+        if (button) chooseAnswer(button.dataset.answer);
+      });
+    </script>
+  </body>
+</html>
