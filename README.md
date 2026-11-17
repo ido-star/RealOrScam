@@ -1,7 +1,7 @@
-# Real or Scam?
+# אמיתי או הונאה?
 
-A small, browser-based game about spotting suspicious messages. Classify 10 emails, texts, and DMs as OK or a scam, then read the explanation for each answer.
+משחק קטן בדפדפן לזיהוי הודעות חשודות. סווגו 10 הודעות דואר אלקטרוני, מסרונים והודעות פרטיות כאמיתיות או כהונאה, וקראו את ההסבר לכל תשובה.
 
-## Play
+## משחקים
 
-Open `index.html` in any modern web browser. No installation or build step is required.
+פתחו את `index.html` בכל דפדפן מודרני. אין צורך בהתקנה או בתהליך בנייה.
