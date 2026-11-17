@@ -40,12 +40,12 @@
         padding: 28px 0 48px;
       }
 
-      .topbar, .brand, .score-wrap, .progress-row, .message-heading, .actions {
+      .topbar, .brand, .score-wrap, .progress-row, .actions {
         display: flex;
         align-items: center;
       }
 
-      .topbar, .progress-row, .message-heading {
+      .topbar, .progress-row {
         justify-content: space-between;
       }
 
@@ -123,30 +123,97 @@
       }
       .message {
         margin: 20px 24px 0;
-        padding: 22px;
-        border: 1px solid var(--line);
-        border-radius: 14px;
-        background: #fbfbf7;
+        overflow: hidden;
+        border: 1px solid #dfe4e5;
+        border-radius: 16px;
+        background: #fff;
+        color: #242a2d;
       }
-      .message-heading { gap: 12px; }
-      .channel {
-        display: inline-flex;
+      .message-toolbar {
+        display: flex;
         align-items: center;
-        gap: 7px;
-        color: var(--green);
-        font-size: 12px;
+        justify-content: space-between;
+        gap: 12px;
+        min-height: 48px;
+        padding: 10px 18px;
+        border-bottom: 1px solid #e8ebed;
+        background: #f7f9fa;
+        color: #59646b;
+        font-size: 13px;
+        font-weight: 700;
+      }
+      .toolbar-icons { color: #7a858c; font-size: 18px; letter-spacing: .12em; white-space: nowrap; }
+      .simulation-label { font-size: 11px; font-weight: 600; opacity: .75; }
+      .message-subject {
+        margin: 0;
+        padding: 22px 22px 4px;
+        font-size: 20px;
+        line-height: 1.35;
+      }
+      .message-header {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 18px 22px 10px;
+      }
+      .avatar {
+        display: grid;
+        flex: 0 0 40px;
+        width: 40px;
+        height: 40px;
+        place-items: center;
+        border-radius: 50%;
+        background: #dcebe5;
+        color: #286d52;
+        font-size: 17px;
         font-weight: 800;
       }
-      .channel-icon { font-size: 16px; }
-      .timestamp { color: #89918c; font-size: 12px; }
-      .sender { margin: 18px 0 5px; font-size: 14px; font-weight: 750; }
-      .detail { margin: 0; color: var(--muted); font-size: 12px; }
+      .sender-info { min-width: 0; flex: 1; }
+      .sender { margin: 0 0 3px; font-size: 14px; font-weight: 750; overflow-wrap: anywhere; }
+      .detail { margin: 0; color: #69747a; font-size: 12px; overflow-wrap: anywhere; }
+      .timestamp { color: #78838a; font-size: 12px; white-space: nowrap; }
+      .message-content { padding: 8px 22px 28px; }
+      .message-bubble { max-width: 100%; }
       .message-copy {
-        margin: 22px 0 2px;
-        color: #29362f;
+        margin: 0;
         font-size: 15px;
         line-height: 1.7;
         overflow-wrap: anywhere;
+      }
+      .message-sms .message-toolbar { background: #f7f7f9; color: #3577d4; }
+      .message-sms .message-header {
+        padding: 14px 18px;
+        border-bottom: 1px solid #e7e7eb;
+        background: #f7f7f9;
+      }
+      .message-sms .avatar { background: #9da5ae; color: #fff; }
+      .message-sms .message-content { min-height: 200px; padding: 24px 18px 30px; background: #fff; }
+      .message-sms .message-bubble {
+        width: fit-content;
+        max-width: 85%;
+        padding: 11px 15px;
+        border-radius: 19px 19px 5px 19px;
+        background: #e9e9eb;
+      }
+      .message-dm .message-toolbar { border: 0; background: #075e54; color: #fff; }
+      .message-dm .toolbar-icons { color: #d6e9e5; }
+      .message-dm .message-header { padding: 12px 18px; background: #075e54; color: #fff; }
+      .message-dm .avatar { background: #d6e8df; color: #075e54; }
+      .message-dm .detail, .message-dm .timestamp { color: #d2e7e1; }
+      .message-dm .message-content {
+        min-height: 200px;
+        padding: 24px 18px 30px;
+        background-color: #e9e3d7;
+        background-image: radial-gradient(#d5d0c3 1px, transparent 1px);
+        background-size: 20px 20px;
+      }
+      .message-dm .message-bubble {
+        width: fit-content;
+        max-width: 85%;
+        padding: 10px 14px;
+        border-radius: 4px 14px 14px 14px;
+        background: #fff;
+        box-shadow: 0 1px 2px rgb(0 0 0 / 12%);
       }
       .question {
         margin: 22px 24px 14px;
@@ -201,7 +268,12 @@
         .intro { font-size: 15px; }
         .progress-row { padding: 18px 18px 14px; }
         .progress-track { margin: 0 18px; }
-        .message { margin: 18px 14px 0; padding: 18px; }
+        .message { margin: 18px 14px 0; }
+        .message-subject { padding-inline: 16px; }
+        .message-header { padding-inline: 16px; }
+        .message-content { padding-inline: 16px; }
+        .message-sms .message-bubble, .message-dm .message-bubble { max-width: 94%; }
+        .timestamp { font-size: 11px; }
         .question { margin-inline: 14px; }
         .actions { gap: 9px; padding-inline: 14px; }
         .feedback { margin-inline: 14px; }
@@ -237,14 +309,25 @@
           <div class="progress-track" role="progressbar" aria-label="התקדמות במשחק" aria-valuemin="0" aria-valuemax="10" aria-valuenow="0">
             <div class="progress-fill" id="progress-fill"></div>
           </div>
-          <article class="message" aria-live="polite">
-            <div class="message-heading">
-              <span class="channel"><span class="channel-icon" id="channel-icon" aria-hidden="true"></span><span id="channel-name"></span></span>
+          <article class="message" id="message" aria-live="polite">
+            <div class="message-toolbar">
+              <span><span id="channel-name"></span> <span class="simulation-label">· הדמיה</span></span>
+              <span class="toolbar-icons" aria-hidden="true">‹ &nbsp; ⋯</span>
+            </div>
+            <h2 class="message-subject" id="message-subject" hidden></h2>
+            <div class="message-header">
+              <span class="avatar" id="avatar" aria-hidden="true"></span>
+              <div class="sender-info">
+                <p class="sender" id="sender"></p>
+                <p class="detail" id="detail"></p>
+              </div>
               <span class="timestamp" id="timestamp"></span>
             </div>
-            <p class="sender" id="sender"></p>
-            <p class="detail" id="detail"></p>
-            <p class="message-copy" id="message-copy"></p>
+            <div class="message-content">
+              <div class="message-bubble">
+                <p class="message-copy" id="message-copy"></p>
+              </div>
+            </div>
           </article>
           <p class="question">מה דעתכם?</p>
           <div class="actions" id="answer-actions">
@@ -269,61 +352,61 @@
     <script>
       const messages = [
         {
-          channel: "דואר אלקטרוני", icon: "✉", time: "היום, 9:41",
+          type: "email", channel: "דואר אלקטרוני", subject: "תזכורת להחזרת ספר", time: "היום, 9:41",
           sender: "הספרייה שלכם", detail: "מאת: notices@northside-library.example",
           copy: "צריך להחזיר את הספר עד יום שישי. אפשר להאריך את תקופת ההשאלה באפליקציה של הספרייה או להביא אותו לאחד הסניפים. שאלות? התקשרו למספר שמופיע בכרטיס הספרייה.",
           answer: "ok", reason: "זו תזכורת שגרתית שמפנה אתכם לאפליקציה מוכרת או למספר שכבר נמצא אצלכם, ולא מבקשת למסור מידע רגיש."
         },
         {
-          channel: "מסרון", icon: "▣", time: "היום, 10:06",
+          type: "sms", channel: "מסרון", time: "היום, 10:06",
           sender: "עדכון על משלוח", detail: "מאת: +1 (555) 010-2741",
           copy: "המשלוח נכשל: הכתובת אינה מלאה. שלמו עכשיו 1.25 דולר על משלוח חוזר: parcel-track.example/fee. השיבו STOP כדי למנוע את החזרת החבילה.",
           answer: "scam", reason: "הודעות לא צפויות על משלוח שדורשות תשלום קטן דרך קישור הן תרגיל נפוץ. בדקו את המעקב באפליקציה הרשמית של החנות או חברת המשלוחים."
         },
         {
-          channel: "הודעה פרטית", icon: "◉", time: "אתמול",
+          type: "dm", channel: "הודעה פרטית", time: "אתמול",
           sender: "מאיה חן", detail: "אינסטגרם · חברה שאתם מכירים",
           copy: "היי! מצאתי את התמונות מהטיול של סוף השבוע והעליתי אותן לאלבום המשותף שלנו. הקישור נמצא בקבוצה שאנחנו כבר משתמשים בה 🙂",
           answer: "ok", reason: "ההודעה משתלבת בשיחה קיימת ומפנה למקום משותף שאתם כבר משתמשים בו. ובכל זאת, אם משהו נראה חשוד, בדקו עם החברה בדרך אחרת."
         },
         {
-          channel: "דואר אלקטרוני", icon: "✉", time: "היום, 8:12",
+          type: "email", channel: "דואר אלקטרוני", subject: "התראה על פעילות בחשבון", time: "היום, 8:12",
           sender: "אבטחת החשבון", detail: "מאת: secure-alerts@account-check.example",
           copy: "זיהינו פעילות חשודה. החשבון שלכם ייסגר לצמיתות בעוד 30 דקות. אשרו כאן את הסיסמה ואת הקוד החד-פעמי כדי לשמור על הגישה לחשבון.",
           answer: "scam", reason: "דחיפות, איום בסגירת החשבון ובקשה לסיסמה או לקוד חד-פעמי הם סימני אזהרה בולטים. היכנסו ישירות לאתר הרשמי של השירות."
         },
         {
-          channel: "מסרון", icon: "▣", time: "היום, 11:23",
+          type: "sms", channel: "מסרון", time: "היום, 11:23",
           sender: "סם", detail: "מאת: +1 (555) 010-8830",
           copy: "אני מאחר בעשר דקות — הרכבת נעצרה בתחנה המרכזית. נפגשים בבית הקפה הרגיל? אכתוב כשאהיה במרחק שתי תחנות.",
           answer: "ok", reason: "זו הודעה אישית רגילה בלי בקשה חריגה או קישור. אם לא ציפיתם לה, בדקו עם סם במספר שאתם מכירים."
         },
         {
-          channel: "הודעה פרטית", icon: "◉", time: "היום, 12:15",
+          type: "dm", channel: "הודעה פרטית", time: "היום, 12:15",
           sender: "CryptoQueen_Official", detail: "טיקטוק · חשבון חדש",
           copy: "זכיתם! בחרתי דווקא בשם המשתמש שלכם להגרלה הפרטית שלי 🎉 שלחו כרטיסי מתנה בשווי 20 דולר כדי לאשר את הזכייה, ואחזיר לכם 2,000 דולר. אל תספרו לאף אחד!",
           answer: "scam", reason: "לא אמורים לשלם כדי לקבל פרס. כרטיסי מתנה, הבטחה לרווח מובטח, חשבון חדש ובקשת סודיות — כל אלה מצביעים על הונאה."
         },
         {
-          channel: "דואר אלקטרוני", icon: "✉", time: "אתמול, 16:32",
+          type: "email", channel: "דואר אלקטרוני", subject: "בוקר התנדבות בגינה", time: "אתמול, 16:32",
           sender: "הגינה הקהילתית", detail: "מאת: team@maple-street-garden.example",
           copy: "בוקר ההתנדבות בשבת יתחיל בשעה 9:00. הביאו כפפות אם יש לכם; אנחנו נדאג לכלים ולתה. השיבו להודעה אם תוכלו להגיע.",
           answer: "ok", reason: "זו הזמנה פשוטה ולא לוחצת, בלי דרישה לכסף, לפרטי גישה או למידע אישי."
         },
         {
-          channel: "מסרון", icon: "▣", time: "היום, 13:02",
+          type: "sms", channel: "מסרון", time: "היום, 13:02",
           sender: "אמא", detail: "מאת: מספר לא מוכר",
           copy: "היי, זה הטלפון החדש שלי. איבדתי את הקודם ואני לא יכולה להתקשר. קנו בבקשה שני כרטיסי מתנה ושלחו לי את הקודים מיד. אל תספרו לאבא — זו הפתעה.",
           answer: "scam", reason: "מספר חדש ולא צפוי, בקשת כסף דחופה, כרטיסי מתנה וסודיות הם סימנים קלאסיים להתחזות. צרו קשר עם בן המשפחה במספר שכבר ידוע לכם."
         },
         {
-          channel: "הודעה פרטית", icon: "◉", time: "היום, 14:47",
+          type: "dm", channel: "הודעה פרטית", time: "היום, 14:47",
           sender: "חנות הספרים המקומית", detail: "אינסטגרם · חשבון שאתם עוקבים אחריו",
           copy: "אנחנו פתוחים היום עד 18:00. הספר שנבחר למפגש הקריאה השבועי נמצא על השולחן בכניסה, ופרטי האירוע מופיעים בפרופיל שלנו. נשמח לראותכם!",
           answer: "ok", reason: "זו הודעה פשוטה בלי לחץ או בקשה למידע רגיש. אם תרצו פרטים, היכנסו ישירות לפרופיל של החנות."
         },
         {
-          channel: "דואר אלקטרוני", icon: "✉", time: "היום, 15:18",
+          type: "email", channel: "דואר אלקטרוני", subject: "עדכון לגבי המשכורת", time: "היום, 15:18",
           sender: "צוות השכר", detail: "מאת: payroll-review@workplace-docs.example",
           copy: "העברת המשכורת שלכם הוקפאה. פתחו את הטופס המצורף והזינו את פרטי הכניסה לעבודה, את סיסמת הבנק ואת מספר כרטיס האשראי המלא עוד היום, אחרת תפספסו את המשכורת הקרובה.",
           answer: "scam", reason: "צוות שכר לגיטימי לא אמור לבקש בדואר אלקטרוני את סיסמת הבנק או את מספר כרטיס האשראי המלא. פנו לצוות השכר בערוץ העבודה הרגיל שלכם."
@@ -349,7 +432,11 @@
         answered = false;
         document.querySelector("#round-label").textContent = `הודעה ${round + 1} מתוך ${messages.length}`;
         document.querySelector("#streak-label").textContent = `רצף השיא: ${bestStreak}`;
-        document.querySelector("#channel-icon").textContent = message.icon;
+        document.querySelector("#message").className = `message message-${message.type}`;
+        const subject = document.querySelector("#message-subject");
+        subject.hidden = message.type !== "email";
+        subject.textContent = message.subject || "";
+        document.querySelector("#avatar").textContent = Array.from(message.sender)[0];
         document.querySelector("#channel-name").textContent = message.channel;
         document.querySelector("#timestamp").textContent = message.time;
         document.querySelector("#sender").textContent = message.sender;
