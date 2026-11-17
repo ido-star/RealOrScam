@@ -1,10 +1,10 @@
 <!doctype html>
-<html lang="en">
+<html lang="he" dir="rtl">
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="theme-color" content="#f5f4ef">
-    <title>Real or Scam? — Spot the message</title>
+    <title>אמיתי או הונאה? — מזהים הודעות</title>
     <style>
       :root {
         color-scheme: light;
@@ -49,7 +49,7 @@
         justify-content: space-between;
       }
 
-      .brand { gap: 10px; font-size: 15px; font-weight: 750; letter-spacing: -.02em; }
+      .brand { gap: 10px; font-size: 15px; font-weight: 750; }
       .brand-mark {
         display: grid;
         width: 34px;
@@ -77,13 +77,11 @@
         color: var(--green);
         font-size: 12px;
         font-weight: 800;
-        letter-spacing: .12em;
-        text-transform: uppercase;
+        letter-spacing: 0;
       }
       h1 {
         margin: 0;
         font-size: clamp(32px, 6vw, 48px);
-        letter-spacing: -.055em;
         line-height: 1.05;
       }
       .intro {
@@ -138,8 +136,6 @@
         color: var(--green);
         font-size: 12px;
         font-weight: 800;
-        letter-spacing: .08em;
-        text-transform: uppercase;
       }
       .channel-icon { font-size: 16px; }
       .timestamp { color: #89918c; font-size: 12px; }
@@ -193,7 +189,7 @@
       .next-button, .primary-button { padding: 0 22px; background: var(--green); color: white; }
       .result-card { text-align: center; }
       .result-icon { font-size: 42px; }
-      .result-card h2 { margin: 14px 0 9px; font-size: 28px; letter-spacing: -.04em; }
+      .result-card h2 { margin: 14px 0 9px; font-size: 28px; }
       .result-card p { margin: 0 auto 24px; max-width: 440px; color: var(--muted); line-height: 1.65; }
       .result-card .primary-button { min-width: 150px; }
       .hint { margin: 18px 0 0; color: var(--muted); font-size: 12px; text-align: center; }
@@ -220,25 +216,25 @@
   <body>
     <div class="page">
       <header class="topbar">
-        <div class="brand"><span class="brand-mark" aria-hidden="true">✓</span> Real or Scam?</div>
-        <div class="score-wrap">Score <span class="score" id="score" aria-live="polite">0</span></div>
+        <div class="brand"><span class="brand-mark" aria-hidden="true">✓</span> אמיתי או הונאה?</div>
+        <div class="score-wrap">ניקוד <span class="score" id="score" aria-live="polite">0</span></div>
       </header>
 
       <main>
         <section id="welcome" class="welcome-card" aria-labelledby="title">
-          <p class="eyebrow">Trust your instincts</p>
-          <h1 id="title">Real or scam?</h1>
-          <p class="intro">Messages land in your inbox, texts, and DMs every day. Can you tell which ones are safe? Read each one and decide: OK or scam.</p>
-          <button class="primary-button" id="start-button" type="button">Start the game <span aria-hidden="true">→</span></button>
-          <p class="hint">10 messages · No time limit · Learn as you go</p>
+          <p class="eyebrow">סמכו על תחושת הבטן</p>
+          <h1 id="title">אמיתי או הונאה?</h1>
+          <p class="intro">בכל יום מגיעות אליכם הודעות בדואר אלקטרוני, במסרונים ובהודעות פרטיות. תוכלו לזהות אילו מהן בטוחות? קראו כל הודעה והחליטו: אמיתית או הונאה.</p>
+          <button class="primary-button" id="start-button" type="button">מתחילים לשחק <span aria-hidden="true">←</span></button>
+          <p class="hint">10 הודעות · בלי הגבלת זמן · לומדים תוך כדי</p>
         </section>
 
-        <section id="game" class="game-card" aria-label="Message guessing game" hidden>
+        <section id="game" class="game-card" aria-label="משחק זיהוי הודעות" hidden>
           <div class="progress-row">
-            <span id="round-label">Message 1 of 10</span>
-            <span id="streak-label">Best streak: 0</span>
+            <span id="round-label">הודעה 1 מתוך 10</span>
+            <span id="streak-label">רצף השיא: 0</span>
           </div>
-          <div class="progress-track" role="progressbar" aria-label="Game progress" aria-valuemin="0" aria-valuemax="10" aria-valuenow="0">
+          <div class="progress-track" role="progressbar" aria-label="התקדמות במשחק" aria-valuemin="0" aria-valuemax="10" aria-valuenow="0">
             <div class="progress-fill" id="progress-fill"></div>
           </div>
           <article class="message" aria-live="polite">
@@ -250,14 +246,14 @@
             <p class="detail" id="detail"></p>
             <p class="message-copy" id="message-copy"></p>
           </article>
-          <p class="question">What do you think?</p>
+          <p class="question">מה דעתכם?</p>
           <div class="actions" id="answer-actions">
-            <button class="answer-button ok-button" type="button" data-answer="ok">✓ &nbsp; OK</button>
-            <button class="answer-button scam-button" type="button" data-answer="scam">⚠ &nbsp; Scam</button>
+            <button class="answer-button ok-button" type="button" data-answer="ok">✓ &nbsp; אמיתית</button>
+            <button class="answer-button scam-button" type="button" data-answer="scam">⚠ &nbsp; הונאה</button>
           </div>
           <div id="feedback" class="feedback" role="status" hidden></div>
           <div class="next-wrap" id="next-wrap" hidden>
-            <button class="next-button" id="next-button" type="button">Next message <span aria-hidden="true">→</span></button>
+            <button class="next-button" id="next-button" type="button">ההודעה הבאה <span aria-hidden="true">←</span></button>
           </div>
         </section>
 
@@ -265,7 +261,7 @@
           <div class="result-icon" id="result-icon" aria-hidden="true"></div>
           <h2 id="result-title"></h2>
           <p id="result-copy"></p>
-          <button class="primary-button" id="play-again-button" type="button">Play again</button>
+          <button class="primary-button" id="play-again-button" type="button">משחקים שוב</button>
         </section>
       </main>
     </div>
@@ -273,64 +269,64 @@
     <script>
       const messages = [
         {
-          channel: "Email", icon: "✉", time: "Today, 9:41 AM",
-          sender: "Your library", detail: "From: notices@northside-library.example",
-          copy: "Your book is due Friday. Renew it through the library app or bring it to any branch. Questions? Call the number on your library card.",
-          answer: "ok", reason: "It gives a routine reminder and directs you to a familiar app or a number you already have, rather than asking you to share sensitive information."
+          channel: "דואר אלקטרוני", icon: "✉", time: "היום, 9:41",
+          sender: "הספרייה שלכם", detail: "מאת: notices@northside-library.example",
+          copy: "צריך להחזיר את הספר עד יום שישי. אפשר להאריך את תקופת ההשאלה באפליקציה של הספרייה או להביא אותו לאחד הסניפים. שאלות? התקשרו למספר שמופיע בכרטיס הספרייה.",
+          answer: "ok", reason: "זו תזכורת שגרתית שמפנה אתכם לאפליקציה מוכרת או למספר שכבר נמצא אצלכם, ולא מבקשת למסור מידע רגיש."
         },
         {
-          channel: "SMS", icon: "▣", time: "Today, 10:06 AM",
-          sender: "Parcel update", detail: "From: +1 (555) 010-2741",
-          copy: "Delivery failed: address incomplete. Pay a $1.25 redelivery fee now: parcel-track.example/fee. Reply STOP to avoid return.",
-          answer: "scam", reason: "Unexpected delivery texts that demand a small fee through a link are a common trick. Check tracking in the retailer's or carrier's official app instead."
+          channel: "מסרון", icon: "▣", time: "היום, 10:06",
+          sender: "עדכון על משלוח", detail: "מאת: +1 (555) 010-2741",
+          copy: "המשלוח נכשל: הכתובת אינה מלאה. שלמו עכשיו 1.25 דולר על משלוח חוזר: parcel-track.example/fee. השיבו STOP כדי למנוע את החזרת החבילה.",
+          answer: "scam", reason: "הודעות לא צפויות על משלוח שדורשות תשלום קטן דרך קישור הן תרגיל נפוץ. בדקו את המעקב באפליקציה הרשמית של החנות או חברת המשלוחים."
         },
         {
-          channel: "DM", icon: "◉", time: "Yesterday",
-          sender: "Maya Chen", detail: "Instagram · friend you know",
-          copy: "Hey! I found the photos from the hike last weekend and put them in our shared album. The link is in the group chat we already use 🙂",
-          answer: "ok", reason: "This fits an existing conversation and points to a shared space you already use. Still, if anything feels off, confirm with your friend another way."
+          channel: "הודעה פרטית", icon: "◉", time: "אתמול",
+          sender: "מאיה חן", detail: "אינסטגרם · חברה שאתם מכירים",
+          copy: "היי! מצאתי את התמונות מהטיול של סוף השבוע והעליתי אותן לאלבום המשותף שלנו. הקישור נמצא בקבוצה שאנחנו כבר משתמשים בה 🙂",
+          answer: "ok", reason: "ההודעה משתלבת בשיחה קיימת ומפנה למקום משותף שאתם כבר משתמשים בו. ובכל זאת, אם משהו נראה חשוד, בדקו עם החברה בדרך אחרת."
         },
         {
-          channel: "Email", icon: "✉", time: "Today, 8:12 AM",
-          sender: "Account Security", detail: "From: secure-alerts@account-check.example",
-          copy: "We detected suspicious activity. Your account will be permanently closed in 30 minutes. Confirm your password and one-time code here to keep access.",
-          answer: "scam", reason: "Urgency, a threat of account closure, and a request for your password or one-time code are major warning signs. Go directly to the service's official site."
+          channel: "דואר אלקטרוני", icon: "✉", time: "היום, 8:12",
+          sender: "אבטחת החשבון", detail: "מאת: secure-alerts@account-check.example",
+          copy: "זיהינו פעילות חשודה. החשבון שלכם ייסגר לצמיתות בעוד 30 דקות. אשרו כאן את הסיסמה ואת הקוד החד-פעמי כדי לשמור על הגישה לחשבון.",
+          answer: "scam", reason: "דחיפות, איום בסגירת החשבון ובקשה לסיסמה או לקוד חד-פעמי הם סימני אזהרה בולטים. היכנסו ישירות לאתר הרשמי של השירות."
         },
         {
-          channel: "SMS", icon: "▣", time: "Today, 11:23 AM",
-          sender: "Sam", detail: "From: +1 (555) 010-8830",
-          copy: "Running 10 min late—train's stopped at Central. Same coffee place as usual? I'll message when I'm two stops away.",
-          answer: "ok", reason: "This is an ordinary personal message with no unusual request or link. If you weren't expecting it, check with Sam through a number you know."
+          channel: "מסרון", icon: "▣", time: "היום, 11:23",
+          sender: "סם", detail: "מאת: +1 (555) 010-8830",
+          copy: "אני מאחר בעשר דקות — הרכבת נעצרה בתחנה המרכזית. נפגשים בבית הקפה הרגיל? אכתוב כשאהיה במרחק שתי תחנות.",
+          answer: "ok", reason: "זו הודעה אישית רגילה בלי בקשה חריגה או קישור. אם לא ציפיתם לה, בדקו עם סם במספר שאתם מכירים."
         },
         {
-          channel: "DM", icon: "◉", time: "Today, 12:15 PM",
-          sender: "CryptoQueen_Official", detail: "TikTok · new account",
-          copy: "You won! I picked YOUR username for my private giveaway 🎉 Send $20 in gift cards to verify your spot and I'll send back $2,000. Keep this secret!",
-          answer: "scam", reason: "You should never have to pay to receive a prize. Gift cards, guaranteed returns, a new account, and a request for secrecy all point to a scam."
+          channel: "הודעה פרטית", icon: "◉", time: "היום, 12:15",
+          sender: "CryptoQueen_Official", detail: "טיקטוק · חשבון חדש",
+          copy: "זכיתם! בחרתי דווקא בשם המשתמש שלכם להגרלה הפרטית שלי 🎉 שלחו כרטיסי מתנה בשווי 20 דולר כדי לאשר את הזכייה, ואחזיר לכם 2,000 דולר. אל תספרו לאף אחד!",
+          answer: "scam", reason: "לא אמורים לשלם כדי לקבל פרס. כרטיסי מתנה, הבטחה לרווח מובטח, חשבון חדש ובקשת סודיות — כל אלה מצביעים על הונאה."
         },
         {
-          channel: "Email", icon: "✉", time: "Yesterday, 4:32 PM",
-          sender: "Community Garden", detail: "From: team@maple-street-garden.example",
-          copy: "Saturday's volunteer morning starts at 9. Bring gloves if you have them; tools and tea will be provided. Reply to this email if you can make it.",
-          answer: "ok", reason: "It's a low-pressure invitation with a straightforward reply, and no demand for money, credentials, or personal details."
+          channel: "דואר אלקטרוני", icon: "✉", time: "אתמול, 16:32",
+          sender: "הגינה הקהילתית", detail: "מאת: team@maple-street-garden.example",
+          copy: "בוקר ההתנדבות בשבת יתחיל בשעה 9:00. הביאו כפפות אם יש לכם; אנחנו נדאג לכלים ולתה. השיבו להודעה אם תוכלו להגיע.",
+          answer: "ok", reason: "זו הזמנה פשוטה ולא לוחצת, בלי דרישה לכסף, לפרטי גישה או למידע אישי."
         },
         {
-          channel: "SMS", icon: "▣", time: "Today, 1:02 PM",
-          sender: "MOM", detail: "From: unknown number",
-          copy: "Hi, this is my new phone. I lost mine and can't call. Please buy two gift cards and text me the codes ASAP. Don't tell Dad—it's a surprise.",
-          answer: "scam", reason: "A sudden new number, urgent money request, gift cards, and secrecy are classic impersonation signs. Contact your family member using a number you already trust."
+          channel: "מסרון", icon: "▣", time: "היום, 13:02",
+          sender: "אמא", detail: "מאת: מספר לא מוכר",
+          copy: "היי, זה הטלפון החדש שלי. איבדתי את הקודם ואני לא יכולה להתקשר. קנו בבקשה שני כרטיסי מתנה ושלחו לי את הקודים מיד. אל תספרו לאבא — זו הפתעה.",
+          answer: "scam", reason: "מספר חדש ולא צפוי, בקשת כסף דחופה, כרטיסי מתנה וסודיות הם סימנים קלאסיים להתחזות. צרו קשר עם בן המשפחה במספר שכבר ידוע לכם."
         },
         {
-          channel: "DM", icon: "◉", time: "Today, 2:47 PM",
-          sender: "Local Bookshop", detail: "Instagram · account you follow",
-          copy: "We're open until 6 today. This week's reading group pick is on the front table, and the event details are in our profile. Hope to see you there!",
-          answer: "ok", reason: "This is a simple announcement with no pressure or sensitive request. If you want details, visit the shop's profile directly."
+          channel: "הודעה פרטית", icon: "◉", time: "היום, 14:47",
+          sender: "חנות הספרים המקומית", detail: "אינסטגרם · חשבון שאתם עוקבים אחריו",
+          copy: "אנחנו פתוחים היום עד 18:00. הספר שנבחר למפגש הקריאה השבועי נמצא על השולחן בכניסה, ופרטי האירוע מופיעים בפרופיל שלנו. נשמח לראותכם!",
+          answer: "ok", reason: "זו הודעה פשוטה בלי לחץ או בקשה למידע רגיש. אם תרצו פרטים, היכנסו ישירות לפרופיל של החנות."
         },
         {
-          channel: "Email", icon: "✉", time: "Today, 3:18 PM",
-          sender: "Payroll Team", detail: "From: payroll-review@workplace-docs.example",
-          copy: "Your direct deposit is on hold. Open the attached form and enter your employee login, bank password, and full card number today or miss this pay cycle.",
-          answer: "scam", reason: "A legitimate payroll team should not ask for your bank password or full card number by email. Contact payroll through your usual workplace channel."
+          channel: "דואר אלקטרוני", icon: "✉", time: "היום, 15:18",
+          sender: "צוות השכר", detail: "מאת: payroll-review@workplace-docs.example",
+          copy: "העברת המשכורת שלכם הוקפאה. פתחו את הטופס המצורף והזינו את פרטי הכניסה לעבודה, את סיסמת הבנק ואת מספר כרטיס האשראי המלא עוד היום, אחרת תפספסו את המשכורת הקרובה.",
+          answer: "scam", reason: "צוות שכר לגיטימי לא אמור לבקש בדואר אלקטרוני את סיסמת הבנק או את מספר כרטיס האשראי המלא. פנו לצוות השכר בערוץ העבודה הרגיל שלכם."
         }
       ];
 
@@ -351,8 +347,8 @@
       function showMessage() {
         const message = messages[round];
         answered = false;
-        document.querySelector("#round-label").textContent = `Message ${round + 1} of ${messages.length}`;
-        document.querySelector("#streak-label").textContent = `Best streak: ${bestStreak}`;
+        document.querySelector("#round-label").textContent = `הודעה ${round + 1} מתוך ${messages.length}`;
+        document.querySelector("#streak-label").textContent = `רצף השיא: ${bestStreak}`;
         document.querySelector("#channel-icon").textContent = message.icon;
         document.querySelector("#channel-name").textContent = message.channel;
         document.querySelector("#timestamp").textContent = message.time;
@@ -391,18 +387,18 @@
           streak = 0;
         }
         scoreDisplay.textContent = String(score);
-        document.querySelector("#streak-label").textContent = `Best streak: ${bestStreak}`;
+        document.querySelector("#streak-label").textContent = `רצף השיא: ${bestStreak}`;
         answerActions.hidden = true;
         feedback.hidden = false;
         feedback.className = `feedback ${correct ? "correct" : "incorrect"}`;
         feedback.replaceChildren();
         const heading = document.createElement("strong");
-        heading.textContent = correct ? "That's right!" : `Not quite — this one is ${message.answer === "ok" ? "OK" : "a scam"}.`;
+        heading.textContent = correct ? "נכון מאוד!" : `לא בדיוק — זו ${message.answer === "ok" ? "הודעה אמיתית" : "הונאה"}.`;
         const explanation = document.createElement("p");
         explanation.textContent = message.reason;
         feedback.append(heading, explanation);
         nextWrap.hidden = false;
-        document.querySelector("#next-button").textContent = round === messages.length - 1 ? "See your results →" : "Next message →";
+        document.querySelector("#next-button").textContent = round === messages.length - 1 ? "לתוצאות ←" : "ההודעה הבאה ←";
       }
 
       function nextMessage() {
@@ -417,8 +413,8 @@
         progressTrack.setAttribute("aria-valuenow", String(messages.length));
         const percent = Math.round((score / messages.length) * 100);
         document.querySelector("#result-icon").textContent = score >= 8 ? "🏆" : score >= 5 ? "🌱" : "🧭";
-        document.querySelector("#result-title").textContent = score >= 8 ? "Sharp eyes!" : score >= 5 ? "Good instincts!" : "Keep practicing!";
-        document.querySelector("#result-copy").textContent = `You spotted ${score} of ${messages.length} messages correctly (${percent}%). When in doubt, don't click or reply—contact the person or organization through a channel you already trust.`;
+        document.querySelector("#result-title").textContent = score >= 8 ? "עין חדה!" : score >= 5 ? "תחושת בטן טובה!" : "ממשיכים להתאמן!";
+        document.querySelector("#result-copy").textContent = `זיהיתם נכון ${score} מתוך ${messages.length} הודעות (${percent}%). אם יש ספק, אל תלחצו ואל תשיבו — צרו קשר עם האדם או הארגון בערוץ שאתם כבר סומכים עליו.`;
       }
 
       document.querySelector("#start-button").addEventListener("click", startGame);
